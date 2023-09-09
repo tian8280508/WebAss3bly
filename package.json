@@ -7,6 +7,8 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "codemirror": "5.54.0",
+    "element-tiptap": "^1.27.1",
     "element-ui": "^2.15.14",
     "vue": "^2.6.14",
     "vue-router": "^3.5.1",
