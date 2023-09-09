@@ -4,6 +4,7 @@
     <FirstPage>
       111
     </FirstPage>
+    <RichText />
   </div>
 </template>
 
