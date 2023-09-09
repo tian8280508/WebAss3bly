@@ -1,8 +1,6 @@
 <template>
   <div>
-    111
     <FirstPage>
-      111
     </FirstPage>
     <RichText />
   </div>
