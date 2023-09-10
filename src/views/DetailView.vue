@@ -6,7 +6,7 @@
         </el-header>
         <el-container style="display: flex; flex-direction: row-reverse;"> 
             <el-aside width="200px">
-                
+                sidebar
             </el-aside>
             <el-main>
                 Main
@@ -18,14 +18,14 @@
 </template>
   
 <script>
-  import RichText from "@/components/RichText.vue";
-  export default {
+import RichText from "@/components/RichText.vue";
+export default {
     name: "App",
     components: {
         RichText
     }
-  };
-  </script>
+};
+</script>
   
 <style>
 #app {
