@@ -208,7 +208,7 @@ export default { //这个是一个Vue对象
               {
                 name: 'converters',
                 children: [
-                  { name: 'Converters'},
+                  { name: 'Converters' },
                   { name: 'DelimitedTextConverter', value: 4294 }
                 ]
               },
@@ -287,7 +287,7 @@ export default { //这个是一个Vue对象
                   { name: 'xor', value: 354 },
                   { name: 'x_x', value: 264 }
                 ],
-                value:"test",
+                value: "test",
               },
               { name: 'Minimum', value: 843 },
               { name: 'Not', value: 1554 },
@@ -330,6 +330,7 @@ export default { //这个是一个Vue对象
       // 绘制图表
       console.log(JSON.stringify(this.chartOption.series[0].data));
       this.chartOption.series[0].data = JSON.parse(JSON.stringify(this.chartData));
+      console.log(this.chartData);
       // myChart.clear();
       myChart.setOption(
         {
@@ -339,6 +340,8 @@ export default { //这个是一个Vue对象
           },
           series: [
             {
+
+              roam: true,//移动+放大
               type: 'tree',
               id: 0,
               name: 'tree1',
@@ -377,7 +380,7 @@ export default { //这个是一个Vue对象
           ]
         },
       )
-        // myChart.setOption(this.chartOption)
+      // myChart.setOption(this.chartOption)
 
     }
   },
