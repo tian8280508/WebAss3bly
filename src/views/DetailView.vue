@@ -5,8 +5,8 @@
             Header
         </el-header>
         <el-container style="display: flex; flex-direction: row-reverse;"> 
-            <el-aside width="200px">
-                sidebar
+            <el-aside style="line-height: normal;" width="300px">
+                <Profile />
             </el-aside>
             <el-main>
                 Main
@@ -18,12 +18,14 @@
 </template>
   
 <script>
+import Profile from "@/components/Profile.vue";
 import RichText from "@/components/RichText.vue";
 export default {
     name: "App",
     components: {
-        RichText
-    }
+    RichText,
+    Profile
+}
 };
 </script>
   
@@ -52,7 +54,7 @@ line-height: 60px;
 }
 
 .el-aside {
-background-color: #D3DCE6;
+background-color: #FFF;
 color: #333;
 text-align: center;
 line-height: 200px;
