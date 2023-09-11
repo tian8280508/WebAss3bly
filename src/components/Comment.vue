@@ -11,7 +11,7 @@
               </div>
               <div class="comment-text">
                   <div class="name">cool.eth</div>
-                  <div class="comment-text">fdf</div>
+                  <div class="comment-text">good!</div>
               </div>
             </div>
             <div class="comment">
@@ -20,7 +20,7 @@
               </div>
               <div class="comment-text">
                   <div class="name">0xade123434...5dfe</div>
-                  <div class="comment-text">fdf</div>
+                  <div class="comment-text">impressive</div>
               </div>
             </div>
             <div class="comment">
@@ -29,7 +29,7 @@
               </div>
               <div class="comment-text">
                 <div class="name">aos.eth</div>
-                <div class="comment-text">fdf</div>
+                <div class="comment-text">really good intro</div>
                </div>
             </div>
             <!-- end fake data -->
