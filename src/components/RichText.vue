@@ -1,6 +1,6 @@
 <template>
   <div v-if="readOnly">
-    <el-tiptap v-model="content" :readonly="true" :showMenubar="false" :extensions="extensions" :content="testContent"
+    <el-tiptap v-model="content" :readonly="true" :showMenubar="false" :extensions="extensions"
       placeholder="Write something ..." />
   </div>
   <div v-else>
@@ -133,7 +133,6 @@ export default {
     if (this.readOnly) {
       var selectID = this.$store.state.selectID
       var content = this.$store.state.contents.find(contentByID => contentByID.id === selectID).content
-      console.log(content);
       this.content = content
     }
   }
