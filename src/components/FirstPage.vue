@@ -26,6 +26,11 @@
                  z-index: 1001;" @click="addNewNodeVisible = true">Add New Node
             </el-button>
 
+
+            <el-switch style="position: absolute; bottom: 40px; right: 380px;" v-model="showBestPath" inactive-color="#13ce66"
+                active-color="#ff9900"  inactive-text="展示最优路径">
+            </el-switch>
+
             <el-dialog title="Add Node" :visible.sync="addNodeVisible" width="80%">
                 <RichText ref="richTextComponent" :readOnly="false" />
 
@@ -56,7 +61,12 @@
 <script>
 import { visConf } from '@/assets/visConf.js'
 import { runXXLayout, treeLayoutConfForm, hubsizeLayoutConfForm } from '@/assets/visLayout'
-import { demoData, ownDemoData } from "@/assets/graphData"
+
+// import {ownDemoData1} from "@/assets/graphData1"
+import {ownDemoData2} from "@/assets/graphData2"
+
+
+
 import RichText from './RichText.vue';
 import { mapState, mapMutations } from 'vuex';
 import Profile from './Profile.vue';
@@ -75,6 +85,8 @@ export default { //这个是一个Vue对象
     },
     data() {
         return {
+            demoData:ownDemoData2,
+            showBestPath:true,
             newNodeName: '',
             addNewNodeVisible: false,
             addNodeVisible: false,
@@ -98,7 +110,7 @@ export default { //这个是一个Vue对象
                 var newGraph = JSON.parse(window.localStorage.getItem('newGraph'))
                 newGraph.nodes.push({ id: nodeID, label: this.newNodeName })
                 newGraph.links.push({ id: 'e' + nodeID, source: selectID, target: nodeID, label: '关系' })
-                this.visgraph.activeAddNodeLinks([{ id: nodeID, label: this.newNodeName }],[{ id: 'e' + nodeID, source: selectID, target: nodeID, label: '关系' }])
+                this.visgraph.activeAddNodeLinks([{ id: nodeID, label: this.newNodeName }], [{ id: 'e' + nodeID, source: selectID, target: nodeID, label: '关系' }])
             } else {
                 // 没有
                 var newGraph = {
@@ -122,9 +134,10 @@ export default { //这个是一个Vue对象
         drawGraph(visConfParm) {
             this.visgraph = new VisGraph(document.getElementById('container'), visConfParm);
             console.log(this.visgraph);
-            this.visgraph.drawData(ownDemoData);
+            this.visgraph.drawData(this.demoData);
+            // console.log(this.demoData);
 
-            
+
             // 上链：存储数据到localstorge
             // window.localStorage.setItem('visgraph',stringify(visgraph))
 
@@ -134,14 +147,14 @@ export default { //这个是一个Vue对象
             // 读取新增加的节点
             if (JSON.parse(window.localStorage.getItem('newGraph'))) {
                 var newGraph = JSON.parse(window.localStorage.getItem('newGraph'))
-                this.visgraph.activeAddNodeLinks(newGraph.nodes,newGraph.links)
-            } 
+                this.visgraph.activeAddNodeLinks(newGraph.nodes, newGraph.links)
+            }
 
             runXXLayout("Tree", this.visgraph.getGraphData(), treeLayoutConfForm);
             // runXXLayout("Hubsize", visgraph.getGraphData(),hubsizeLayoutConfForm);
 
             this.visgraph.setZoom('auto')
-            
+
         },
         ...mapMutations([
             'setVisGraph', 'setSelectID', 'addContents'
@@ -169,11 +182,17 @@ export default { //这个是一个Vue对象
         }
     },
     watch: {
-        graphData(newVal, oldVal) {
-            if (oldVal != newVal) {
-                this.drawChart()
-            }
-        }
+        // graphData(newVal, oldVal) {
+        //     if (oldVal != newVal) {
+        //         this.drawChart()
+        //     }
+        // },
+        // showBestPath(newVal,oldVal){
+        //     this.data = newVal ? ownDemoData2 : ownDemoData1;
+        //     this.visgraph.clearAll()
+        //     this.drawGraph( this.firstConf)
+        //     this.visgraph.setZoom('auto')
+        // }
     },
     computed: {
 
@@ -181,13 +200,13 @@ export default { //这个是一个Vue对象
     mounted() {
         // 重写配置文件
         var that = this
-        var firstConf = visConf
-        firstConf.node.ondblClick = function (event, node) {
+        this.firstConf = visConf
+        this.firstConf .node.ondblClick = function (event, node) {
             that.goToDetail()
             that.setSelectID(node.id)
         }
 
-        firstConf.node.onClick = function (event, node) {
+        this.firstConf .node.onClick = function (event, node) {
             // that.addNodeVisible = true;
             that.currentID = node.id
             that.setSelectID(node.id)
@@ -199,7 +218,9 @@ export default { //这个是一个Vue对象
         } else {
             console.error('visgraph 未定义');
         }
-        this.drawGraph(firstConf)
+        
+        this.drawGraph( this.firstConf )
+
     },
     created() {
 

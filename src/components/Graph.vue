@@ -26,7 +26,7 @@
 <script>
 import { parse, stringify } from 'flatted';
 import { visConf } from '@/assets/visConf.js'
-import { ownDemoData } from '@/assets/graphData';
+import { ownDemoData1 } from '@/assets/graphData1';
 import { runXXLayout, treeLayoutConfForm, hubsizeLayoutConfForm } from '@/assets/visLayout'
 import { ethers } from 'ethers';
 import contractAbi from '@/contract/abi/WAG.json';

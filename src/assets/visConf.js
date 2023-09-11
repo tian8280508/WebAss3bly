@@ -17,13 +17,13 @@ export const visConf = {
     // shape: 'circle', //节点形状 circle,rect,square,ellipse,triangle,star,polygon,text
     //image:'images/T1030001.svg',//节点图标(设置后节点显示为圆形图标)
     shape: "rect",
-    width: 220, //节点的长度(shape为rect生效) 看似无效
-    height: 60, //节点的高度(shape为rect生效)
-    color: "91,165,133", //节点颜色
-    borderColor: "179,216,255", //边框颜色
+    width: 270, //节点的长度(shape为rect生效) 看似无效
+    height: 87, //节点的高度(shape为rect生效)
+    color: "255,255,255", //节点颜色
+    borderColor: "48,53,145", //边框颜色
 
-    borderWidth: 2, //边框宽度,
-    borderRadius: 6, //边框圆角大小 有效
+    borderWidth:  10, //边框宽度,
+    borderRadius: 10.935, //边框圆角大小 有效
     lineDash: [0], //边框虚线间隔,borderWidth>0时生效
 
     // alpha: 1, //节点透明度
@@ -60,9 +60,9 @@ export const visConf = {
     },
     lineType: "direct", //连线类型,direct,curver,vlink,hlink,bezier,vbezier,hbezier
     colorType: "defined", //连线颜色类型 source:继承source颜色,target:继承target颜色 both:用双边颜色，defined:自定义
-    color: "120,120,120", //连线颜色
+    color: "48,53,145", //连线颜色
     alpha: 0.8, // 连线透明度
-    lineWidth: 3, //连线宽度
+    lineWidth: 6, //连线宽度
     lineDash: [0], //虚线间隔样式如：[5,8]
     showArrow: true, //显示箭头
     selected: {

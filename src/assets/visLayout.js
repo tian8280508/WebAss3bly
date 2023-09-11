@@ -126,7 +126,7 @@ var treeLayoutConf = [
 
 var treeLayoutConfForm = {
     'distX':150,
-    'distY':300,
+    'distY':380,
     'direction':"LR"
 }
 
