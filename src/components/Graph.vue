@@ -105,9 +105,10 @@ export default {
         secondVisConf.node.height = 60
         secondVisConf.node.label.font = '18px 微软雅黑'
         var visgraph2 = new VisGraph(document.getElementById('container2'), secondVisConf);
+        var visgraph2_data = visgraph2.getGraphData()
         var newData = { nodes: [], links: [] }
         var nodesIDList = []
-        ownDemoData.links.forEach((item, index) => {
+        visgraph2_data.links.forEach((item, index) => {
             if (item.source == this.selectID || item.target == this.selectID) {
                 nodesIDList.push(item.source)
                 nodesIDList.push(item.target)
@@ -115,7 +116,7 @@ export default {
             }
         });
 
-        ownDemoData.nodes.forEach((item2, index2) => {
+        visgraph2_data.nodes.forEach((item2, index2) => {
             if (nodesIDList.includes(item2.id)) {
                 newData.nodes.push(item2)
             }

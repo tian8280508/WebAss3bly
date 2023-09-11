@@ -11,20 +11,42 @@
         <el-main style="line-height: normal;">
             <div id="container" ref="graph"></div>
             <el-button type="primary" style="position: absolute; 
-                 bottom: 50px; 
-                 right: 50px; 
+                 bottom: 485px; 
+                 right: 48px; 
                  background-color: yourColorHere; 
                  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
                  z-index: 1001;" @click="addNodeVisible = true">Add New Node
             </el-button>
+
+            <el-button type="" style="position: absolute; 
+                 bottom: 485px; 
+                 right: 200px; 
+                 background-color: yourColorHere; 
+                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+                 z-index: 1001;" @click="addNewNodeVisible = true">Add New Node
+            </el-button>
+
             <el-dialog title="Add Node" :visible.sync="addNodeVisible" width="80%">
-                <RichText ref="richTextComponent"  :readOnly="false" />
+                <RichText ref="richTextComponent" :readOnly="false" />
 
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="addNodeVisible = false">Cancel</el-button>
                     <el-button type="primary" @click="updateContent">Confirm</el-button>
                 </span>
 
+            </el-dialog>
+
+
+
+            <el-dialog title="Add a New Node" :visible.sync="addNewNodeVisible" width="30%">
+                <el-input placeholder="Please enter a new node name" v-model="newNodeName">
+
+                </el-input>
+
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="addNewNodeVisible = false">Cancel</el-button>
+                    <el-button type="primary" @click="addNewNode">Confirm</el-button>
+                </span>
             </el-dialog>
         </el-main>
     </el-container>
@@ -53,9 +75,12 @@ export default { //这个是一个Vue对象
     },
     data() {
         return {
+            newNodeName: '',
+            addNewNodeVisible: false,
             addNodeVisible: false,
             inputSearch: '',
-            currentID:'6',
+            currentID: '6',
+            visgraph: ''
         }
     },
     computed: {
@@ -64,46 +89,74 @@ export default { //这个是一个Vue对象
         }),
     },
     methods: {
+        // 添加新的节点
+        addNewNode() {
+            var nodeID = new String(Date.now())
+            var selectID = this.$store.state.selectID
+
+            if (JSON.parse(window.localStorage.getItem('newGraph'))) {
+                var newGraph = JSON.parse(window.localStorage.getItem('newGraph'))
+                newGraph.nodes.push({ id: nodeID, label: this.newNodeName })
+                newGraph.links.push({ id: 'e' + nodeID, source: selectID, target: nodeID, label: '关系' })
+                this.visgraph.activeAddNodeLinks([{ id: nodeID, label: this.newNodeName }],[{ id: 'e' + nodeID, source: selectID, target: nodeID, label: '关系' }])
+            } else {
+                // 没有
+                var newGraph = {
+                    nodes: [{ id: nodeID, label: this.newNodeName }],
+                    links: [{ id: 'e' + nodeID, source: selectID, target: nodeID, label: '关系' }]
+                }
+                this.visgraph.activeAddNodeLinks(newGraph.nodes, newGraph.links)	//在图中动态追加节点和连线
+            }
+            console.log(1);
+            window.localStorage.setItem('newGraph', JSON.stringify(newGraph))
+            console.log(newGraph);
+            this.addNewNodeVisible = false
+        },
+
+
         // 模拟读取数据的接口
         getGraphData() {
             console.log('数据加载成功');
         },
         // 将this.graphData中的数据加载 渲染
         drawGraph(visConfParm) {
-            var visgraph = new VisGraph(document.getElementById('container'), visConfParm);
-            console.log(visgraph);
-            visgraph.drawData(ownDemoData);
+            this.visgraph = new VisGraph(document.getElementById('container'), visConfParm);
+            console.log(this.visgraph);
+            this.visgraph.drawData(ownDemoData);
 
-            runXXLayout("Tree", visgraph.getGraphData(), treeLayoutConfForm);
+            runXXLayout("Tree", this.visgraph.getGraphData(), treeLayoutConfForm);
             // runXXLayout("Hubsize", visgraph.getGraphData(),hubsizeLayoutConfForm);
 
-            visgraph.setZoom('auto')
+            this.visgraph.setZoom('auto')
             // 上链：存储数据到localstorge
             // window.localStorage.setItem('visgraph',stringify(visgraph))
+
             // save to vuex
-            this.setVisGraph(visgraph.getGraphData())
+            // this.setVisGraph(visgraph.getGraphData())
         },
         ...mapMutations([
-            'setVisGraph','setSelectID','addContents'
+            'setVisGraph', 'setSelectID', 'addContents'
         ]),
+
+
+        // 跳转 只能跳转已经存在的节点
         goToDetail() {
             this.$router.push('/detail');
         },
-        
-        updateContent(){
+
+        updateContent() {
             console.log(this.$refs.richTextComponent.content);
             var addContent = {//没有考虑去重
-                id:this.$store.state.selectID,
-                content:this.$refs.richTextComponent.content
+                id: this.$store.state.selectID,
+                content: this.$refs.richTextComponent.content
             }
-            console.log(addContent);
             this.addContents(addContent)
-            console.log(this.$store.state);
             this.$message({
-                message:`成功提交节点，id为${this.$store.state.selectID}`,
-                type:'success'
+                message: `成功提交节点，id为${this.$store.state.selectID}`,
+                type: 'success'
             })
             this.addNodeVisible = false
+            // runXXLayout("Tree", this.visgraph.getGraphData(), treeLayoutConfForm);
         }
     },
     watch: {

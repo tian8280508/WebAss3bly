@@ -132,9 +132,14 @@ export default {
   created() {
     if (this.readOnly) {
       var selectID = this.$store.state.selectID
-      var content = this.$store.state.contents.find(contentByID => contentByID.id === selectID).content
-      console.log(content);
-      this.content = content
+      if (this.$store.state.contents.find(contentByID => contentByID.id === selectID)) {
+        var content = this.$store.state.contents.find(contentByID => contentByID.id === selectID).content
+        console.log(content);
+        this.content = content
+      }else{
+        this.content = ''
+      }
+        
     }
   }
 };
