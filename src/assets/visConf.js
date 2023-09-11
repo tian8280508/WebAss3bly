@@ -5,7 +5,7 @@ export const visConf = {
       //标签配置
       show: true, //是否显示
       color: "50,50,50", //字体颜色
-      font: "13px 微软雅黑", //字体大小及类型
+      font: "30px 微软雅黑", //字体大小及类型
       wrapText: false, //节点包裹文字
       textPosition: "Middle_Center", //文字位置 Top_Center,Bottom_Center,Middle_Right
       //textOffsetX:-24,//文字横向偏移量
@@ -17,8 +17,8 @@ export const visConf = {
     // shape: 'circle', //节点形状 circle,rect,square,ellipse,triangle,star,polygon,text
     //image:'images/T1030001.svg',//节点图标(设置后节点显示为圆形图标)
     shape: "rect",
-    width: 150, //节点的长度(shape为rect生效) 看似无效
-    height: 50, //节点的高度(shape为rect生效)
+    width: 220, //节点的长度(shape为rect生效) 看似无效
+    height: 60, //节点的高度(shape为rect生效)
     color: "91,165,133", //节点颜色
     borderColor: "179,216,255", //边框颜色
 
@@ -42,6 +42,7 @@ export const visConf = {
     },
     ondblClick: function (event, node) {
 	  
+
     }, //节点双击事件
     onMouseDown: function (event, node) {}, //节点的鼠标按下事件
     onMouseUp: function (event, node) {}, //节点的鼠标弹起事件

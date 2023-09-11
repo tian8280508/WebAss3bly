@@ -1,34 +1,32 @@
 <template>
     <el-container>
-      <el-header style="display: flex; justify-content: flex-start; align-items: center;">
-        <el-image style="width: 150px; margin-right: 20px;" :src="require('@/assets/logo.jpg')"></el-image>
-        <el-input style="width: 700px;" placeholder="Input to search..." v-model="inputSearch">
-          <template slot="prepend"><i class="el-icon-search"></i></template>
-        </el-input>
-        <Profile style="line-height: normal; position: absolute; top: 10px; right: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); background-color: #fff; z-index: 1000;" />
-      </el-header>
-      <el-main>
-        <div id="container" ref="graph"></div>
-        <el-button 
-          type="primary"
-          style="position: absolute; 
+        <el-header style="display: flex; justify-content: flex-start; align-items: center;">
+            <el-image style="width: 150px; margin-right: 20px;" :src="require('@/assets/logo.jpg')"></el-image>
+            <el-input style="width: 700px;" placeholder="Input to search..." v-model="inputSearch">
+                <template slot="prepend"><i class="el-icon-search"></i></template>
+            </el-input>
+            <Profile
+                style="line-height: normal; position: absolute; top: 10px; right: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); background-color: #fff; z-index: 1000;" />
+        </el-header>
+        <el-main style="line-height: normal;">
+            <div id="container" ref="graph"></div>
+            <el-button type="primary" style="position: absolute; 
                  bottom: 50px; 
                  right: 50px; 
                  background-color: yourColorHere; 
                  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
-                 z-index: 1001;"
-          @click="TODO">Add New Node
-        </el-button>
-        <el-dialog title="Add Node" :visible.sync="addNodeVisible">
-            <RichText :readOnly="false" />
+                 z-index: 1001;" @click="addNodeVisible = true">Add New Node
+            </el-button>
+            <el-dialog title="Add Node" :visible.sync="addNodeVisible" width="80%">
+                <RichText ref="richTextComponent"  :readOnly="false" />
 
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="addNodeVisible = false">Cancel</el-button>
-                <el-button type="primary" @click="addNodeVisible = false">Confirm</el-button>
-            </span>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="addNodeVisible = false">Cancel</el-button>
+                    <el-button type="primary" @click="updateContent">Confirm</el-button>
+                </span>
 
-        </el-dialog>
-      </el-main>
+            </el-dialog>
+        </el-main>
     </el-container>
 </template>
 
@@ -56,7 +54,8 @@ export default { //这个是一个Vue对象
     data() {
         return {
             addNodeVisible: false,
-            inputSearch:'',
+            inputSearch: '',
+            currentID:'6',
         }
     },
     computed: {
@@ -82,20 +81,30 @@ export default { //这个是一个Vue对象
             // 上链：存储数据到localstorge
             // window.localStorage.setItem('visgraph',stringify(visgraph))
             // save to vuex
-            this.saveVisGraph2Vuex(visgraph.getGraphData())
-            this.$nextTick(() => {
-                console.log(this.visgraphInVuex);
-
-            });
-            console.log(this.$store.state.visGraph);
+            this.setVisGraph(visgraph.getGraphData())
         },
-        ...mapMutations({
-            saveVisGraph2Vuex: 'setVisGraph'
-        }),
+        ...mapMutations([
+            'setVisGraph','setSelectID','addContents'
+        ]),
         goToDetail() {
             this.$router.push('/detail');
         },
-
+        
+        updateContent(){
+            console.log(this.$refs.richTextComponent.content);
+            var addContent = {//没有考虑去重
+                id:this.$store.state.selectID,
+                content:this.$refs.richTextComponent.content
+            }
+            console.log(addContent);
+            this.addContents(addContent)
+            console.log(this.$store.state);
+            this.$message({
+                message:`成功提交节点，id为${this.$store.state.selectID}`,
+                type:'success'
+            })
+            this.addNodeVisible = false
+        }
     },
     watch: {
         graphData(newVal, oldVal) {
@@ -113,10 +122,13 @@ export default { //这个是一个Vue对象
         var firstConf = visConf
         firstConf.node.ondblClick = function (event, node) {
             that.goToDetail()
+            that.setSelectID(node.id)
         }
 
         firstConf.node.onClick = function (event, node) {
-          // that.addNodeVisible = true;
+            // that.addNodeVisible = true;
+            that.currentID = node.id
+            that.setSelectID(node.id)
         }
 
 
@@ -136,10 +148,11 @@ export default { //这个是一个Vue对象
 // <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .search-button {
-  display: flex;
-  width: 700px;
-  border-radius: 28.618px;
+    display: flex;
+    width: 700px;
+    border-radius: 28.618px;
 }
+
 .header {
     height: 60px;
     background-color: rgba(0, 0, 0, .5);
@@ -147,7 +160,7 @@ export default { //这个是一个Vue对象
 
 #container {
     /* width: 500px;可以没有这个 */
-    height: 500px;
+    height: 420px;
     /* 不可以100% */
     /* background-color: #42b983; */
 }

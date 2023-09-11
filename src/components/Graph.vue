@@ -33,7 +33,7 @@ export default {
     name: 'Graph',
     data() {
         return {
-            id: "6",
+            selectID:"6",
             showVoteDialog: false,
             voteAmount: ''
         }
@@ -71,14 +71,21 @@ export default {
 
             this.voteAmount = '';
             this.showVoteDialog = false;
+            this.$message({
+                message:'成功为节点投票',
+                type:'success'
+            })
         }
+
     },
     mounted() {
+        // get id from state
+        this.selectID = this.$store.state.selectID
+        console.log('当前节点是：',this.selectID);
         // read bisgraph from local
         // var visgraph = parse(window.localStorage.getItem('visgraph'))
         //read data  this.$store.state.visGraph
         // console.log(visgraph.getGraphData());
-        console.log(this.$store.state.visGraph)
         var that = this
         var secondVisConf = visConf
         secondVisConf.node.onClick = function (event, node) {
@@ -94,18 +101,20 @@ export default {
         var newData = { nodes: [], links: [] }
         var nodesIDList = []
         ownDemoData.links.forEach((item, index) => {
-            if (item.source == this.id || item.target == this.id) {
+            if (item.source == this.selectID || item.target == this.selectID) {
                 nodesIDList.push(item.source)
                 nodesIDList.push(item.target)
                 newData.links.push(item)
             }
         });
-        console.log(nodesIDList);
+
         ownDemoData.nodes.forEach((item2, index2) => {
             if (nodesIDList.includes(item2.id)) {
                 newData.nodes.push(item2)
             }
         })
+
+        // console.log(newData);
 
         visgraph2.drawData(newData);
         treeLayoutConfForm.distY = 150
