@@ -11,6 +11,9 @@
                 <img style="margin-right: 4px;" src="../assets/Shape.png" />
                 <label class="address-font">{{ shortenedAddress }}</label>
             </el-row>
+            <el-row>
+                <div class="balance-font">{{ shortenedBalance }} </div>
+            </el-row>
             <el-row class="full-width-row">
                 <div>
                     <i style="color: #3887FE; font-size: 24px;" class="el-icon-menu"></i>
@@ -20,7 +23,7 @@
                     <i style="color: #3887FE; font-size: 24px;" class="el-icon-copy-document"></i>
                     <span>Collections</span>
                 </div>
-                <div>
+                <div class="disconnect-hover" @click="disconnectWallet">
                     <i style="color: #3887FE; font-size: 24px;" class="el-icon-more"></i>
                     <span>Disconnect</span>
                 </div>
@@ -38,51 +41,88 @@ import { ethers } from "ethers";
 export default {
     data() {
         return {
-            name: null,
             account: null,
+            name: null,
             balance: null,
         };
     },
     computed: {
         shortenedAddress() {
-        if (this.account) {
-            this.name = "tian.eth"
-            return `${this.account.substring(0, 12)}...${this.account.substring(this.account.length - 4)}`;
-        }
-        return '';
+            if (this.account) {
+                this.name = "tian.eth"
+                return `${this.account.substring(0, 12)}...${this.account.substring(this.account.length - 4)}`;
+            }
+            return '';
         },
+        shortenedBalance() {
+            if (this.balance) {
+                return `${this.balance.substring(0,6)}...ETH`
+            }
+        }
     },
     methods: {
         async connectWallet() {
-        if (typeof window.ethereum !== "undefined") {
-            try {
-            // 请求用户账户地址
-            const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-            this.account = accounts[0];
+            if (typeof window.ethereum !== "undefined") {
+                try {
+                    // 请求用户账户地址
+                    const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+                    this.$emit('update:account', accounts[0]);
+                    this.account = accounts[0]
+                    console.log("account here:" + this.account)
 
-            // 创建一个 ethers provider
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
+                    // 创建一个 ethers provider
+                    const provider = new ethers.providers.Web3Provider(window.ethereum);
+                    
+                    // 获取用户的 ETH 余额
+                    const balanceWei = await provider.getBalance(this.account);
+                    this.balance = ethers.utils.formatEther(balanceWei);
 
-            // 获取用户的 ETH 余额
-            const balanceWei = await provider.getBalance(this.account);
-            this.balance = ethers.utils.formatEther(balanceWei);
-            } catch (error) {
-            console.error(error);
+                    // Save account info to localStorage
+                    localStorage.setItem('walletInfo', JSON.stringify({ account: this.account, balance: this.balance, name: 'tian.eth' }));
+                } catch (error) {
+                    console.error(error);
+                }
+            } else {
+                alert("Please install a Web3 provider, such as MetaMask.");
             }
-        } else {
-            alert("Please install a Web3 provider, such as MetaMask.");
-        }
         },
+        
+        disconnectWallet() {
+            this.account = null;
+            this.name = null;
+            this.balance = null;
+            localStorage.removeItem('walletInfo');
+        },
+        mounted() {
+            console.log("mounted")
+            const walletInfo = JSON.parse(localStorage.getItem('walletInfo'));
+            if (walletInfo) {
+                this.$emit('update:account', walletInfo.account);
+                this.name = walletInfo.name;
+                this.balance = walletInfo.balance;
+                this.account = walletInfo.account;
+            }
+        },
+        created() {
+            // Check if account info exists in localStorage and use it if it does
+            const walletInfo = JSON.parse(localStorage.getItem('walletInfo'));
+            if (walletInfo) {
+                this.$emit('update:account', walletInfo.account);
+                this.name = walletInfo.name;
+                this.balance = walletInfo.balance;
+                this.account = walletInfo.account;
+            }   
+        }
     },
 };
 </script>
   
 <style>
 .wallet {
-    height: 300px;
+    max-height: 400px;
     padding: 10px;
-    max-width: 400px;
-    margin: 0 auto;
+    max-width: 300px;
+    margin: 10 10;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -134,11 +174,24 @@ export default {
     align-items: center;
     text-align: center;
 }
-
 .icon {
     width: 20px;
     height: 20px;
     margin-bottom: 5px; /* 添加一些间距，使图像和文本之间有一些空间 */
+}
+.balance-font {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #333;
+}
+.disconnect-hover:hover {
+    border: 2px solid #3887FE;
+    border-radius: 5px; /* 可以根据你的需求调整这个值 */
+    transition: border 0.15s; /* 添加一个平滑的过渡效果 */
+}
+.full-width-row div {
+    display: inline-block;
+    padding: 2px; /* 添加一些填充，使得边框看起来更好 */
 }
 </style>
   

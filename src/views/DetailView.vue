@@ -2,9 +2,7 @@
     <div id="app">
         <el-container>
         <el-header>
-            <img style="margin-right: 4px;" src="../assets/logo.png" />
-            <span style="color: #FF9900;">Web3</span>
-            <span style="color: #3887FE;">Assembly</span>
+            <img width="150px" style="margin-right: 4px;" src="../assets/logo.jpg" />
         </el-header>
         <el-container style="display: flex; flex-direction: row-reverse;"> 
             <el-aside style="line-height: normal;" width="300px">
@@ -14,12 +12,15 @@
                 <Comment />
             </el-aside>
             <el-main style="line-height: normal;">
-                <div style="display: flex; justify-content: flex-end; gap: 20px; margin-bottom: 10px;">
-                    <i class="el-icon-star-off" 
-                        :style="{ fontSize: '2rem', color: isStarActive ? 'red' : 'inherit' }" 
-                        @click="toggleStar"></i>
-                    <i class="el-icon-download" style="font-size: 2rem;"></i>
-                    <i class="el-icon-collection" style="font-size: 2rem;"></i>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <i class="el-icon-s-comment" style="font-size: 2rem;"></i>
+                    <div style="display: flex; gap: 20px;">
+                        <i class="el-icon-star-off icon-transition" 
+                            :style="{ fontSize: '2rem', color: isStarActive ? 'red' : 'inherit' }" 
+                            @click="toggleStar"></i>
+                        <i class="el-icon-download" style="font-size: 2rem;"></i>
+                        <i class="el-icon-collection" style="font-size: 2rem;"></i>
+                    </div>
                 </div>
                 <RichText :readOnly="true" />
             </el-main>
@@ -47,6 +48,7 @@ export default {
     },
     data() {
         return {
+            id: 1,
             isStarActive: false
         }
     },
@@ -54,6 +56,9 @@ export default {
         toggleStar() {
             this.isStarActive = !this.isStarActive
         },
+        getGraphById() {
+            
+        }
     },
 
 };
@@ -107,5 +112,9 @@ line-height: 260px;
 
 .el-container:nth-child(7) .el-aside {
 line-height: 320px;
+}
+
+.icon-transition {
+  transition: color 0.3s; 
 }
 </style>
