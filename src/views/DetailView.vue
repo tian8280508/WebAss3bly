@@ -4,7 +4,7 @@
             <el-header>
 
                 <!-- 部署到8080端口 -->
-                <a href="http://localhost:8080">
+                <a href="web-ass3bly.vercel.app">
                     <img width="150px" style="margin-right: 4px;" src="../assets/logo.jpg" />
                 </a>
             </el-header>
