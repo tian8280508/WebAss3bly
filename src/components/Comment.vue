@@ -1,6 +1,6 @@
 <template>
     <div class="comment-box">
-      <el-row v-if="comments.length">
+      <el-row style="line-height: normal;">
         <el-col :span="24" class="col-content">
           <div class="comments-view" ref="commentsView">
             
@@ -40,8 +40,8 @@
                 <img src="../assets/wonderpal3981.png" alt="Avatar" class="comment-avatar">
               </div>
               <div class="comment-text">
-                  <div class="name">{{ comment.name }}</div>
-                  <div class="comment-text">{{ comment.text }}</div>
+                <div class="name">{{ comment.name }}</div>
+                <div class="comment-text">{{ comment.text }}</div>
               </div>
             </div>
           </div>
@@ -92,7 +92,7 @@
         const newComment = {
           id: Date.now(),
           name: "tian.eth",
-          avatar: "../assets/wonderpal3981.png",
+          avatar: "wonderpal3981.png",
           text: this.newCommentText.trim()
         };
   
@@ -121,7 +121,6 @@
   padding: 0 10px;
 }
 .comment-box {
-  height: 300px;
   border: 1px solid #ccc;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
