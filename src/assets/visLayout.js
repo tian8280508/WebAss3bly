@@ -126,12 +126,12 @@ var treeLayoutConf = [
 
 var treeLayoutConfForm = {
     'distX':150,
-    'distY':200,
+    'distY':300,
     'direction':"LR"
 }
 
 var hubsizeLayoutConfForm = {
-    layerDistance:200,
+    layerDistance:100,
     nodeDistance:200,
     sortMethod:"directed",
     direction:"LR"

@@ -1,17 +1,19 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-  },
-  getters: {
+    visGraph: null,
   },
   mutations: {
+    setVisGraph(state, payload) {
+      console.log(payload);
+      console.log('new state:');
+      state.visGraph = payload;
+      console.log(state.visGraph);
+    },
   },
-  actions: {
-  },
-  modules: {
-  }
-})
+
+});
