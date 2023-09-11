@@ -3,13 +3,44 @@
       <el-row v-if="comments.length">
         <el-col :span="24" class="col-content">
           <div class="comments-view" ref="commentsView">
+            
+            <!-- fake data -->
+            <div class="comment">
+              <div class="avatar-container">
+                <img src="../assets/avatar1.jpg" alt="Avatar" class="comment-avatar">
+              </div>
+              <div class="comment-text">
+                  <div class="name">cool.eth</div>
+                  <div class="comment-text">fdf</div>
+              </div>
+            </div>
+            <div class="comment">
+              <div class="avatar-container">
+                <img src="../assets/avatar2.jpg" alt="Avatar" class="comment-avatar">
+              </div>
+              <div class="comment-text">
+                  <div class="name">0xade123434...5dfe</div>
+                  <div class="comment-text">fdf</div>
+              </div>
+            </div>
+            <div class="comment">
+              <div class="avatar-container">
+                <img src="../assets/avatar3.jpg" alt="Avatar" class="comment-avatar">
+              </div>
+              <div class="comment-text">
+                <div class="name">aos.eth</div>
+                <div class="comment-text">fdf</div>
+               </div>
+            </div>
+            <!-- end fake data -->
+
             <div v-for="comment in comments" :key="comment.id" class="comment">
               <!-- <img :src="comment.avatar" alt="Avatar" class="comment-avatar"> -->
               <div class="avatar-container">
                 <img src="../assets/wonderpal3981.png" alt="Avatar" class="comment-avatar">
               </div>
               <div class="comment-text">
-                  <div class="name">tian.eth</div>
+                  <div class="name">{{ comment.name }}</div>
                   <div class="comment-text">{{ comment.text }}</div>
               </div>
             </div>
@@ -32,7 +63,23 @@
     data() {
       return {
         newCommentText: '',
-        comments: []
+        comments: [],
+        testComments: [{
+          id: 123,
+          name: "cool.eth",
+          avatar: "../assets/avatar1.jpg",
+          text: "really impressive"
+        },{
+          id: 124,
+          name: "0xade123434...5dfe",
+          avatar: "../assets/avatar2.jpg",
+          text: "really impressive"
+        },{
+          id: 125,
+          name: "aos.eth",
+          avatar: "../assets/avatar3.jpg",
+          text: "really impressive"
+        }]
       };
     },
     mounted() {
@@ -44,6 +91,7 @@
   
         const newComment = {
           id: Date.now(),
+          name: "tian.eth",
           avatar: "../assets/wonderpal3981.png",
           text: this.newCommentText.trim()
         };
@@ -100,7 +148,9 @@
     border-radius: 50%;
 }
 .comment-text {
-  
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 .col-content {
   display: flex;

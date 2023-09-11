@@ -3,6 +3,7 @@
         <el-container>
             <el-header>
 
+                <!-- 部署到8080端口 -->
                 <a href="http://localhost:8080">
                     <img width="150px" style="margin-right: 4px;" src="../assets/logo.jpg" />
                 </a>
@@ -60,8 +61,12 @@ export default {
             this.isStarActive = !this.isStarActive
         },
         getGraphById() {
-
+            
+        },
+        goToMain() {
+            this.$router.push('/');
         }
+
     },
 
 };

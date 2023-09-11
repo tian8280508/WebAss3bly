@@ -92,28 +92,28 @@ export default {
             this.name = null;
             this.balance = null;
             localStorage.removeItem('walletInfo');
-        },
-        mounted() {
-            console.log("mounted")
-            const walletInfo = JSON.parse(localStorage.getItem('walletInfo'));
-            if (walletInfo) {
-                this.$emit('update:account', walletInfo.account);
-                this.name = walletInfo.name;
-                this.balance = walletInfo.balance;
-                this.account = walletInfo.account;
-            }
-        },
-        created() {
-            // Check if account info exists in localStorage and use it if it does
-            const walletInfo = JSON.parse(localStorage.getItem('walletInfo'));
-            if (walletInfo) {
-                this.$emit('update:account', walletInfo.account);
-                this.name = walletInfo.name;
-                this.balance = walletInfo.balance;
-                this.account = walletInfo.account;
-            }   
         }
     },
+    mounted() {
+        console.log("mounted")
+        const walletInfo = JSON.parse(localStorage.getItem('walletInfo'));
+        if (walletInfo) {
+            this.$emit('update:account', walletInfo.account);
+            this.name = walletInfo.name;
+            this.balance = walletInfo.balance;
+            this.account = walletInfo.account;
+        }
+    },
+    created() {
+        // Check if account info exists in localStorage and use it if it does
+        const walletInfo = JSON.parse(localStorage.getItem('walletInfo'));
+        if (walletInfo) {
+            this.$emit('update:account', walletInfo.account);
+            this.name = walletInfo.name;
+            this.balance = walletInfo.balance;
+            this.account = walletInfo.account;
+        }   
+    }
 };
 </script>
   
