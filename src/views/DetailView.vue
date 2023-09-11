@@ -2,15 +2,25 @@
     <div id="app">
         <el-container>
         <el-header>
-            Header
+            <img style="margin-right: 4px;" src="../assets/logo.png" />
+            <span style="color: #FF9900;">Web3</span>
+            <span style="color: #3887FE;">Assembly</span>
         </el-header>
         <el-container style="display: flex; flex-direction: row-reverse;"> 
             <el-aside style="line-height: normal;" width="300px">
                 <Profile />
+                <VotingButton />
+                <Comment />
             </el-aside>
-            <el-main>
-                Main
-                <RichText />
+            <el-main style="line-height: normal;">
+                <div style="display: flex; justify-content: flex-end; gap: 20px; margin-bottom: 10px;">
+                    <i class="el-icon-star-off" 
+                        :style="{ fontSize: '2rem', color: isStarActive ? 'red' : 'inherit' }" 
+                        @click="toggleStar"></i>
+                    <i class="el-icon-download" style="font-size: 2rem;"></i>
+                    <i class="el-icon-collection" style="font-size: 2rem;"></i>
+                </div>
+                <RichText :readOnly="true" />
             </el-main>
         </el-container> 
     </el-container>
@@ -20,12 +30,28 @@
 <script>
 import Profile from "@/components/Profile.vue";
 import RichText from "@/components/RichText.vue";
+import Comment from '@/components/Comment.vue'
+import VotingButton from '@/components/VotingButton.vue'
+
 export default {
     name: "App",
     components: {
-    RichText,
-    Profile
-}
+        RichText,
+        Profile,
+        Comment,
+        VotingButton
+    },
+    data() {
+        return {
+            isStarActive: false
+        }
+    },
+    methods: {
+        toggleStar() {
+            this.isStarActive = !this.isStarActive
+        },
+    },
+
 };
 </script>
   
@@ -39,15 +65,14 @@ margin: 40px;
 }
 
 header {
-align-items: center;
-display: flex;
-justify-content: space-between;
-margin-bottom: 40px;
-width: 100%;
+    align-items: center;
+    display: flex;
+    margin-bottom: 5px;
+    width: 100%;
 }
 
 .el-header, .el-footer {
-background-color: #B3C0D1;
+background-color: #FFF;
 color: #333;
 text-align: center;
 line-height: 60px;

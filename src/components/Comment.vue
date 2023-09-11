@@ -5,18 +5,23 @@
           <div class="comments-view" ref="commentsView">
             <div v-for="comment in comments" :key="comment.id" class="comment">
               <!-- <img :src="comment.avatar" alt="Avatar" class="comment-avatar"> -->
-              <img src="../assets/wonderpal3981.png" alt="Avatar" class="comment-avatar">
-              <p class="comment-text">{{ comment.text }}</p>
+              <div class="avatar-container">
+                <img src="../assets/wonderpal3981.png" alt="Avatar" class="comment-avatar">
+              </div>
+              <div class="comment-text">
+                  <div class="name">tian.eth</div>
+                  <div class="comment-text">{{ comment.text }}</div>
+              </div>
             </div>
           </div>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="20">
-          <el-input v-model="newCommentText" placeholder="Input Your Comment here~"></el-input>
+          <el-input v-model="newCommentText" placeholder="Comments here~"></el-input>
         </el-col>
         <el-col :span="4">
-          <el-button @click="addComment">Send</el-button>
+          <el-button type="primary" icon="el-icon-edit" circle @click="addComment"></el-button>
         </el-col>
       </el-row>
     </div>
@@ -60,40 +65,54 @@
   };
   </script>
   
-  <style scoped>
-  .comment-box {
-    width: 300px;
-    height: 400px;
-    border: 1px solid #ccc;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  .comments-view {
-    height: 280px;
-    width: 100%;
-    overflow-y: scroll;
-    margin-bottom: 10px;
-  }
-  .comment {
-    display: flex;
-    align-items: center;
-    padding: 5px 0;
-    border-bottom: 1px solid #eee;
-  }
-  .comment-avatar {
-    width: 30px;
-    height: 30px;
+<style scoped>
+.avatar-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+}
+.comment-box {
+  height: 400px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.comments-view {
+  height: 280px;
+  width: 100%;
+  overflow-y: scroll;
+  margin-bottom: 20px;
+}
+.comment {
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+  border: 1px solid #eee;
+  border-radius: 5%;
+}
+.comment:not(:last-child) {
+  margin-bottom: 5px;
+}
+.comment-avatar {
+    width: 40px; /* Adjust as needed */
+    height: 40px; /* Adjust as needed */
     border-radius: 50%;
-    margin-right: 10px;
-  }
-  .comment-text {
-    flex: 1;
-  }
-  .col-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  </style>
+}
+.comment-text {
+  
+}
+.col-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.name {
+    font-weight: bold;
+    margin-bottom: 1px; /* Adjust as needed */
+}
+.comment-text {
+    font-size: 14px; /* Adjust as needed */
+}
+</style>
   

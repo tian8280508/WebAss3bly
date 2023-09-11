@@ -7,31 +7,23 @@
             <el-row>
                 <div class="name-font">{{ name }}</div>
             </el-row>
-            <el-row style="display: flex;" align-items="middle">
-                <el-col>
-                    <img style="margin-right: 4px;" src="../assets/Shape.png" />
-                    <label class="address-font">{{ shortenedAddress }}</label>
-                </el-col>
+            <el-row style="display: flex; justify-content: center; align-items: center;" align-items="middle">
+                <img style="margin-right: 4px;" src="../assets/Shape.png" />
+                <label class="address-font">{{ shortenedAddress }}</label>
             </el-row>
-            <el-row>
-                <el-col :span="8" class="col-content">
-                    <div class="content-center">
-                        <img src="../assets/Vector.png" alt="Icon" class="icon" />
-                        <br />Dashboard
-                    </div>
-                </el-col>
-                <el-col :span="8" class="col-content">
-                    <div class="content-center">
-                        <img src="../assets/Vector.png" alt="Icon" class="icon" />
-                        <br />My nodes
-                    </div>
-                </el-col>
-                <el-col :span="8" class="col-content">
-                    <div class="content-center">
-                        <img src="../assets/Vector.png" alt="Icon" class="icon" />
-                        <br />Log
-                    </div>
-                </el-col>
+            <el-row class="full-width-row">
+                <div>
+                    <i style="color: #3887FE; font-size: 24px;" class="el-icon-menu"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div>
+                    <i style="color: #3887FE; font-size: 24px;" class="el-icon-copy-document"></i>
+                    <span>Collections</span>
+                </div>
+                <div>
+                    <i style="color: #3887FE; font-size: 24px;" class="el-icon-more"></i>
+                    <span>Disconnect</span>
+                </div>
             </el-row>
         </div>
         <div v-else>
@@ -55,7 +47,7 @@ export default {
         shortenedAddress() {
         if (this.account) {
             this.name = "tian.eth"
-            return `${this.account.substring(0, 8)}...${this.account.substring(this.account.length - 4)}`;
+            return `${this.account.substring(0, 12)}...${this.account.substring(this.account.length - 4)}`;
         }
         return '';
         },
@@ -87,13 +79,20 @@ export default {
   
 <style>
 .wallet {
+    height: 300px;
     padding: 10px;
     max-width: 400px;
     margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    border: 1px solid #FFF;
+    border: 1px solid #ccc;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.full-width-row {
+    width: 100%;
 }
 .el-row {
     margin: 10px;
@@ -116,24 +115,30 @@ export default {
 }
 .address-font {
     color: #5D5D5B;
-    font: inter;
     font-weight: 700;
     font-size: 1rem;
 }
 .name-font {
-    font: inter;
     font-weight: 800;
     font-size: 2rem;
     align-items: center;
 }
-.col-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.full-width-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+.content-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
-.content-center {
-  text-align: center;
+.icon {
+    width: 20px;
+    height: 20px;
+    margin-bottom: 5px; /* 添加一些间距，使图像和文本之间有一些空间 */
 }
 </style>
   
