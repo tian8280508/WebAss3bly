@@ -9,6 +9,7 @@
         <el-container style="display: flex; flex-direction: row-reverse;"> 
             <el-aside style="line-height: normal;" width="300px">
                 <Profile />
+                <Graph />
                 <VotingButton />
                 <Comment />
             </el-aside>
@@ -32,10 +33,13 @@ import Profile from "@/components/Profile.vue";
 import RichText from "@/components/RichText.vue";
 import Comment from '@/components/Comment.vue'
 import VotingButton from '@/components/VotingButton.vue'
+import Graph from "@/components/Graph.vue";
+
 
 export default {
     name: "App",
     components: {
+        Graph,
         RichText,
         Profile,
         Comment,

@@ -13,6 +13,7 @@
     "element-tiptap": "^1.27.1",
     "element-ui": "^2.15.14",
     "ethers": "^5.7.2",
+    "flatted": "^3.2.7",
     "vue": "^2.7.14",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2"
