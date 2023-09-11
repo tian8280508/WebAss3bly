@@ -1,10 +1,9 @@
 <template>
-    <div style="height: 300px;">
+    <div>
         <el-card>
-            <div slot="header" class="clearfix">
-                <span>Double Click to vote!</span>
-            </div>
-            <div id="container2" style="height: 200px;"></div>
+            <el-tooltip class="item" effect="dark" content="double click Node to vote" placement="top-start">
+                <div id="container2" style="height: 300px;"></div>
+            </el-tooltip>
         </el-card>
 
 
@@ -14,12 +13,7 @@
                 <div> <strong>How many $WAG do you want to vote?</strong></div>
                 <br/>
                 <br/>
-
-                
                 <el-input v-model="voteAmount" placeholder="Enter amount" style="width: 300px;"></el-input>
-
-
-
             </div>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="submitVote" type="primary">Confirm</el-button>
@@ -86,16 +80,17 @@ export default {
         // console.log(visgraph.getGraphData());
         console.log(this.$store.state.visGraph)
         var that = this
-        visConf.node.onClick = function (event, node) {
+        var secondVisConf = visConf
+        secondVisConf.node.onClick = function (event, node) {
         }
-        visConf.node.ondblClick = function (event, node) {
+        secondVisConf.node.ondblClick = function (event, node) {
             that.showVoteDialog = true
         }
 
-        visConf.node.width = 100
-        visConf.node.height = 70
-        visConf.node.label.font = '20px 微软雅黑'
-        var visgraph = new VisGraph(document.getElementById('container2'), visConf);
+        secondVisConf.node.width = 80
+        secondVisConf.node.height = 60
+        secondVisConf.node.label.font = '18px 微软雅黑'
+        var visgraph2 = new VisGraph(document.getElementById('container2'), secondVisConf);
         var newData = { nodes: [], links: [] }
         var nodesIDList = []
         ownDemoData.links.forEach((item, index) => {
@@ -112,13 +107,13 @@ export default {
             }
         })
 
-        visgraph.drawData(newData);
+        visgraph2.drawData(newData);
         treeLayoutConfForm.distY = 150
         treeLayoutConfForm.distX = 100
         treeLayoutConfForm.direction = 'UD'
-        runXXLayout("Tree", visgraph.getGraphData(), treeLayoutConfForm);
+        runXXLayout("Tree", visgraph2.getGraphData(), treeLayoutConfForm);
 
-        visgraph.setZoom('auto')
+        visgraph2.setZoom('auto')
     },
 
 }

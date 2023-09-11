@@ -39,6 +39,7 @@ import { runXXLayout, treeLayoutConfForm, hubsizeLayoutConfForm } from '@/assets
 import { demoData, ownDemoData } from "@/assets/graphData"
 import RichText from './RichText.vue';
 import { mapState, mapMutations } from 'vuex';
+import Profile from './Profile.vue';
 
 // import { parse, stringify } from 'flatted'; 循环对象
 
@@ -109,15 +110,13 @@ export default { //这个是一个Vue对象
     mounted() {
         // 重写配置文件
         var that = this
-        visConf.node.ondblClick = function (event, node) {
-            console.log(node);
-            that.addNodeVisible = true;
-            console.log(that.addNodeVisible);
+        var firstConf = visConf
+        firstConf.node.ondblClick = function (event, node) {
+            that.goToDetail()
         }
 
-        visConf.node.onClick = function (event, node) {
-            console.log('Click:',node);
-            that.goToDetail()
+        firstConf.node.onClick = function (event, node) {
+          // that.addNodeVisible = true;
         }
 
 
@@ -126,7 +125,7 @@ export default { //这个是一个Vue对象
         } else {
             console.error('visgraph 未定义');
         }
-        this.drawGraph(visConf)
+        this.drawGraph(firstConf)
     },
     created() {
 
