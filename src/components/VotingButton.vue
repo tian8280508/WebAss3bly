@@ -34,6 +34,10 @@
           this.$message.warning('Please input the amount you want to vote.');
           return;
         }
+        if (this.voteAmount<=0) {
+          this.$message.warning('Please input the correct amount you want to vote.');
+          return;
+        }
   
         try {
           if (typeof window.ethereum !== "undefined") {
