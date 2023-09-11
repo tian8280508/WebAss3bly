@@ -2,7 +2,7 @@
   <div class="hello">
     <el-row class="header">
       <el-col :span="8">
-        <el-image style="width: 65px; height: 65px" :src="require('@/assets/logo.png')"></el-image>
+        <el-image style="width: 65px; height: 65px" :src="require('@/assets/logo.jpg')"></el-image>
       </el-col>
     </el-row>
     <div id="myChart">

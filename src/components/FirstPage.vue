@@ -1,11 +1,24 @@
 <template>
-    <div class="hello">
-        <el-row class="header">
-            <el-col :span="8">
-                <el-image style="width: 65px; height: 65px" :src="require('@/assets/logo.png')"></el-image>
-            </el-col>
-        </el-row>
+    <el-container>
+      <el-header style="display: flex; justify-content: flex-start; align-items: center;">
+        <el-image style="width: 150px; margin-right: 20px;" :src="require('@/assets/logo.jpg')"></el-image>
+        <el-input style="width: 700px;" placeholder="Input to search..." v-model="inputSearch">
+          <template slot="prepend"><i class="el-icon-search"></i></template>
+        </el-input>
+        <Profile style="line-height: normal; position: absolute; top: 10px; right: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); background-color: #fff; z-index: 1000;" />
+      </el-header>
+      <el-main>
         <div id="container" ref="graph"></div>
+        <el-button 
+          type="primary"
+          style="position: absolute; 
+                 bottom: 50px; 
+                 right: 50px; 
+                 background-color: yourColorHere; 
+                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+                 z-index: 1001;"
+          @click="TODO">Add New Node
+        </el-button>
         <el-dialog title="Add Node" :visible.sync="addNodeVisible">
             <RichText :readOnly="false" />
 
@@ -15,20 +28,18 @@
             </span>
 
         </el-dialog>
-    </div>
+      </el-main>
+    </el-container>
 </template>
 
 
 <script>
-
-
-import * as echarts from 'echarts';
-import { chartData1, chartData2, chartOption1, chartOption2 } from '@/assets/chartData.js';
 import { visConf } from '@/assets/visConf.js'
 import { runXXLayout, treeLayoutConfForm, hubsizeLayoutConfForm } from '@/assets/visLayout'
 import { demoData, ownDemoData } from "@/assets/graphData"
 import RichText from './RichText.vue';
 import { mapState, mapMutations } from 'vuex';
+import Profile from './Profile.vue';
 
 // import { parse, stringify } from 'flatted'; 循环对象
 
@@ -39,11 +50,13 @@ export default { //这个是一个Vue对象
         msg: String
     },
     components: {
-        RichText
+        RichText,
+        Profile
     },
     data() {
         return {
             addNodeVisible: false,
+            inputSearch:'',
         }
     },
     computed: {
@@ -97,15 +110,13 @@ export default { //这个是一个Vue对象
     mounted() {
         // 重写配置文件
         var that = this
-        visConf.node.ondblClick = function (event, node) {
-            console.log(node);
-            that.addNodeVisible = true;
-            console.log(that.addNodeVisible);
+        var firstConf = visConf
+        firstConf.node.ondblClick = function (event, node) {
+            that.goToDetail()
         }
 
-        visConf.node.onClick = function (event, node) {
-            console.log('Click:',node);
-            that.goToDetail()
+        firstConf.node.onClick = function (event, node) {
+          // that.addNodeVisible = true;
         }
 
 
@@ -114,7 +125,7 @@ export default { //这个是一个Vue对象
         } else {
             console.error('visgraph 未定义');
         }
-        this.drawGraph(visConf)
+        this.drawGraph(firstConf)
     },
     created() {
 
@@ -124,6 +135,11 @@ export default { //这个是一个Vue对象
 
 // <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.search-button {
+  display: flex;
+  width: 700px;
+  border-radius: 28.618px;
+}
 .header {
     height: 60px;
     background-color: rgba(0, 0, 0, .5);
