@@ -124,15 +124,24 @@ export default { //这个是一个Vue对象
             console.log(this.visgraph);
             this.visgraph.drawData(ownDemoData);
 
-            runXXLayout("Tree", this.visgraph.getGraphData(), treeLayoutConfForm);
-            // runXXLayout("Hubsize", visgraph.getGraphData(),hubsizeLayoutConfForm);
-
-            this.visgraph.setZoom('auto')
+            
             // 上链：存储数据到localstorge
             // window.localStorage.setItem('visgraph',stringify(visgraph))
 
             // save to vuex
             // this.setVisGraph(visgraph.getGraphData())
+
+            // 读取新增加的节点
+            if (JSON.parse(window.localStorage.getItem('newGraph'))) {
+                var newGraph = JSON.parse(window.localStorage.getItem('newGraph'))
+                this.visgraph.activeAddNodeLinks(newGraph.nodes,newGraph.links)
+            } 
+
+            runXXLayout("Tree", this.visgraph.getGraphData(), treeLayoutConfForm);
+            // runXXLayout("Hubsize", visgraph.getGraphData(),hubsizeLayoutConfForm);
+
+            this.visgraph.setZoom('auto')
+            
         },
         ...mapMutations([
             'setVisGraph', 'setSelectID', 'addContents'
