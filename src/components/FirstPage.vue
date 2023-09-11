@@ -11,16 +11,16 @@
         <el-main style="line-height: normal;">
             <div id="container" ref="graph"></div>
             <el-button type="primary" style="position: absolute; 
-                 bottom: 485px; 
+                 bottom:30px; 
                  right: 48px; 
                  background-color: yourColorHere; 
                  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
-                 z-index: 1001;" @click="addNodeVisible = true">Add New Node
+                 z-index: 1001;" @click="addNodeVisible = true">Merge New Node
             </el-button>
 
             <el-button type="" style="position: absolute; 
-                 bottom: 485px; 
-                 right: 200px; 
+                 bottom: 30px; 
+                 right: 220px; 
                  background-color: yourColorHere; 
                  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
                  z-index: 1001;" @click="addNewNodeVisible = true">Add New Node
