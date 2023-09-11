@@ -2,9 +2,6 @@
   <div>
     <FirstPage>
     </FirstPage>
-    <Profile />
-    <Comment />
-    <VotingButton />
   </div>
 </template>
 
@@ -16,12 +13,12 @@ import Comment from '@/components/Comment.vue'
 import VotingButton from '@/components/VotingButton.vue'
 
 export default {
-  name: 'HomeView',
-  components: {
-    FirstPage,
-    Profile,
-    Comment,
-    VotingButton
-}
+    name: 'HomeView',
+    components: {
+      FirstPage,
+      Profile,
+      Comment,
+      VotingButton
+  }
 }
 </script>

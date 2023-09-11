@@ -9,6 +9,8 @@
         <el-container style="display: flex; flex-direction: row-reverse;"> 
             <el-aside style="line-height: normal;" width="300px">
                 <Profile />
+                <VotingButton />
+                <Comment />
             </el-aside>
             <el-main style="line-height: normal;">
                 <div style="display: flex; justify-content: flex-end; gap: 20px; margin-bottom: 10px;">
@@ -28,11 +30,16 @@
 <script>
 import Profile from "@/components/Profile.vue";
 import RichText from "@/components/RichText.vue";
+import Comment from '@/components/Comment.vue'
+import VotingButton from '@/components/VotingButton.vue'
+
 export default {
     name: "App",
     components: {
         RichText,
-        Profile
+        Profile,
+        Comment,
+        VotingButton
     },
     data() {
         return {

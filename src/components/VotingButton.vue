@@ -1,7 +1,6 @@
 <template>
     <div>
       <el-button @click="showVoteDialog = true">Vote $WAG</el-button>
-      
       <el-dialog
         title="Vote $WAG"
         :visible.sync="showVoteDialog"
