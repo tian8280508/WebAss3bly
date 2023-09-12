@@ -26,7 +26,7 @@
 <script>
 import { parse, stringify } from 'flatted';
 import { visConf } from '@/assets/visConf.js'
-import { ownDemoData1 } from '@/assets/graphData1';
+import { ownDemoData2 } from '@/assets/graphData2';
 import { runXXLayout, treeLayoutConfForm, hubsizeLayoutConfForm } from '@/assets/visLayout'
 import { ethers } from 'ethers';
 import contractAbi from '@/contract/abi/WAG.json';
@@ -104,25 +104,27 @@ export default {
         secondVisConf.node.width = 80
         secondVisConf.node.height = 60
         secondVisConf.node.label.font = '18px 微软雅黑'
+
+
         var visgraph2 = new VisGraph(document.getElementById('container2'), secondVisConf);
-        var visgraph2_data = visgraph2.getGraphData()
+        // var visgraph2_data = visgraph2.getGraphData()
         var newData = { nodes: [], links: [] }
         var nodesIDList = []
-        visgraph2_data.links.forEach((item, index) => {
+        ownDemoData2.links.forEach((item, index) => {
             if (item.source == this.selectID || item.target == this.selectID) {
                 nodesIDList.push(item.source)
                 nodesIDList.push(item.target)
                 newData.links.push(item)
             }
         });
-
-        visgraph2_data.nodes.forEach((item2, index2) => {
+        console.log(nodesIDList);
+        ownDemoData2.nodes.forEach((item2, index2) => {
             if (nodesIDList.includes(item2.id)) {
                 newData.nodes.push(item2)
             }
         })
 
-        // console.log(newData);
+        console.log(newData);
 
         visgraph2.drawData(newData);
         treeLayoutConfForm.distY = 150
