@@ -2,8 +2,6 @@
     <div id="app">
         <el-container>
             <el-header>
-
-                <!-- 部署到8080端口 -->
                 <a href="http://web-ass3bly.vercel.app">
                     <img width="150px" style="margin-right: 4px;" src="../assets/logo.jpg" />
                 </a>

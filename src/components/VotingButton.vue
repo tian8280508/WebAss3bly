@@ -27,6 +27,7 @@
       };
     },
     methods: {
+      // 根本没用上 在Graph 里，不用看
       async submitVote() {
         if (!this.voteAmount) {
           this.$message.warning('Please input the amount you want to vote.');

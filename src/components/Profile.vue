@@ -19,7 +19,7 @@
                     <i style="color: #3887FE; font-size: 24px;" class="el-icon-menu"></i>
                     <span>Dashboard</span>
                 </div>
-                <div>
+                <div class="disconnect-hover" @click="getToken">
                     <i style="color: #3887FE; font-size: 24px;" class="el-icon-copy-document"></i>
                     <span>Collections</span>
                 </div>
@@ -37,7 +37,8 @@
   
 <script>
 import { ethers } from "ethers";
-
+import contractAbi from '@/contract/abi/WAG.json';
+ 
 export default {
     data() {
         return {
@@ -92,6 +93,32 @@ export default {
             this.name = null;
             this.balance = null;
             localStorage.removeItem('walletInfo');
+        },
+
+        async getToken() {
+            try {
+                if (typeof window.ethereum !== "undefined") {
+                    const provider = new ethers.providers.Web3Provider(window.ethereum);
+                    const signer = provider.getSigner();
+                    const contractAddress = "0xF12feBF4984A05Abb0288AE34bBB051C7ecC2EA5";
+                    const contract = new ethers.Contract(contractAddress, contractAbi, signer);
+                    const tx = await contract.claim();
+
+                    await tx.wait();
+                    this.$message({
+                        message:'Token received !',
+                        type:'success'
+                    })
+                } else {
+                    alert("Please install a Web3 provider, such as MetaMask.");
+                }
+            } catch (error) {
+                this.$message({
+                        message: error,
+                        type:'error'
+                    })
+                console.error('Error sending transaction:', error);
+            }
         }
     },
     mounted() {
