@@ -20,8 +20,8 @@
                     <span>Dashboard</span>
                 </div>
                 <div class="disconnect-hover" @click="getToken">
-                    <i style="color: #3887FE; font-size: 24px;" class="el-icon-copy-document"></i>
-                    <span>Collections</span>
+                    <i style="color: #3887FE; font-size: 24px;" class="el-icon-circle-plus-outline"></i>
+                    <span>ClaimToken</span>
                 </div>
                 <div class="disconnect-hover" @click="disconnectWallet">
                     <i style="color: #3887FE; font-size: 24px;" class="el-icon-more"></i>
