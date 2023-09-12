@@ -30,6 +30,7 @@ import { ownDemoData2 } from '@/assets/graphData2';
 import { runXXLayout, treeLayoutConfForm, hubsizeLayoutConfForm } from '@/assets/visLayout'
 import { ethers } from 'ethers';
 import contractAbi from '@/contract/abi/WAG.json';
+import { contractAddress } from '@/components/const.js'
 
 export default {
     name: 'Graph',
@@ -56,7 +57,6 @@ export default {
                 if (typeof window.ethereum !== "undefined") {
                     const provider = new ethers.providers.Web3Provider(window.ethereum);
                     const signer = provider.getSigner();
-                    const contractAddress = "0xF12feBF4984A05Abb0288AE34bBB051C7ecC2EA5";
                     const contract = new ethers.Contract(contractAddress, contractAbi, signer);
 
                     const tx = await contract.burn(this.voteAmount);

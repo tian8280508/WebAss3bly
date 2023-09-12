@@ -38,6 +38,7 @@
 <script>
 import { ethers } from "ethers";
 import contractAbi from '@/contract/abi/WAG.json';
+import { contractAddress } from '@/components/const.js'
  
 export default {
     data() {
@@ -100,10 +101,9 @@ export default {
                 if (typeof window.ethereum !== "undefined") {
                     const provider = new ethers.providers.Web3Provider(window.ethereum);
                     const signer = provider.getSigner();
-                    const contractAddress = "0xF12feBF4984A05Abb0288AE34bBB051C7ecC2EA5";
+                    console.log(contractAddress)
                     const contract = new ethers.Contract(contractAddress, contractAbi, signer);
                     const tx = await contract.claim();
-
                     await tx.wait();
                     this.$message({
                         message:'Token received !',
