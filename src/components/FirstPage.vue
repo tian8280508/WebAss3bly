@@ -87,7 +87,7 @@
 
         <span slot="footer" class="dialog-footer">
           <el-button @click="addNewNodeVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="createNode">Confirm</el-button>
+          <el-button type="primary" @click="addNewNode">Confirm</el-button>
         </span>
       </el-dialog>
     </el-main>
@@ -137,8 +137,8 @@ export default { //这个是一个Vue对象
     }),
   },
   methods: {
-    // 更新节点内容
-    async updateContent() {
+    // 更新节点内容，后端版本，不用先
+    async updateContentDeprecated() {
         const content = this.$refs.richTextComponent.content;
         const nodeName = this.newNodeName; 
         const id = 2
@@ -162,7 +162,7 @@ export default { //这个是一个Vue对象
         }
     },
 
-    // 创建节点
+    // 创建节点，后端版本，不用先
     async createNode() {
         const nodeName = this.newNodeName; 
 
@@ -209,6 +209,20 @@ export default { //这个是一个Vue对象
       this.addNewNodeVisible = false
     },
 
+    updateContent () {
+      console.log(this.$refs.richTextComponent.content)
+      var addContent = {//没有考虑去重
+        id: this.$store.state.selectID,
+        content: this.$refs.richTextComponent.content
+      }
+      this.addContents(addContent)
+      this.$message({
+        message: `成功提交节点，id为${this.$store.state.selectID}`,
+        type: 'success'
+      })
+      this.addNodeVisible = false
+      // runXXLayout("Tree", this.visgraph.getGraphData(), treeLayoutConfForm);
+    },
 
     // 模拟读取数据的接口
     getGraphData () {
