@@ -39,7 +39,7 @@
           z-index: 1001;
         "
         @click="addNodeVisible = true"
-        >Merge New Node
+        >Edit Node
       </el-button>
 
       <el-button
@@ -47,7 +47,7 @@
         style="
           position: absolute;
           bottom: 30px;
-          right: 220px;
+          right: 180px;
           background-color: yourColorHere;
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
           z-index: 1001;
@@ -57,7 +57,7 @@
       </el-button>
 
       <el-switch
-        style="position: absolute; bottom: 40px; right: 380px"
+        style="position: absolute; bottom: 40px; right: 360px"
         v-model="showBestPath"
         inactive-color="#13ce66"
         active-color="#ff9900"
@@ -65,7 +65,7 @@
       >
       </el-switch>
 
-      <el-dialog title="Add Node" :visible.sync="addNodeVisible" width="80%">
+      <el-dialog title="Edit Node" :visible.sync="addNodeVisible" width="80%">
         <RichText ref="richTextComponent" :readOnly="false" />
 
         <span slot="footer" class="dialog-footer">
@@ -87,7 +87,7 @@
 
         <span slot="footer" class="dialog-footer">
           <el-button @click="addNewNodeVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="addNewNode">Confirm</el-button>
+          <el-button type="primary" @click="createNode">Confirm</el-button>
         </span>
       </el-dialog>
     </el-main>
@@ -106,7 +106,7 @@ import { ownDemoData2 } from "@/assets/graphData2"
 import RichText from './RichText.vue'
 import { mapState, mapMutations } from 'vuex'
 import Profile from './Profile.vue'
-
+import { AddNodeReq, UpdateNodeReq } from '../apis/api.js'
 // import { parse, stringify } from 'flatted'; 循环对象
 
 
@@ -137,6 +137,54 @@ export default { //这个是一个Vue对象
     }),
   },
   methods: {
+    // 更新节点内容
+    async updateContent() {
+        const content = this.$refs.richTextComponent.content;
+        const nodeName = this.newNodeName; 
+        const id = 2
+        const src_id = 0 // 这个变量后端暂时没用，瞎传
+
+        try {
+            const response = await UpdateNodeReq(id, src_id, nodeName, content);
+            console.log(response);
+
+            this.$message({
+                message: `成功提交节点`,
+                type: 'success'
+            });
+            this.addNodeVisible = false;
+        } catch (error) {
+            console.error("Error adding node:", error);
+            this.$message({
+                message: `添加节点出错`,
+                type: 'error'
+            });
+        }
+    },
+
+    // 创建节点
+    async createNode() {
+        const nodeName = this.newNodeName; 
+
+        try {
+            const response = await AddNodeReq(nodeName, "");
+            console.log(response);
+
+            this.$message({
+                message: `成功提交节点`,
+                type: 'success'
+            });
+            this.addNodeVisible = false;
+        } catch (error) {
+            console.error("Error adding node:", error);
+            this.$message({
+                message: `添加节点出错`,
+                type: 'error'
+            });
+        }
+        this.addNewNodeVisible = false
+    },
+
     // 添加新的节点
     addNewNode () {
       var nodeID = new String(Date.now())
@@ -202,20 +250,6 @@ export default { //这个是一个Vue对象
       this.$router.push('/detail')
     },
 
-    updateContent () {
-      console.log(this.$refs.richTextComponent.content)
-      var addContent = {//没有考虑去重
-        id: this.$store.state.selectID,
-        content: this.$refs.richTextComponent.content
-      }
-      this.addContents(addContent)
-      this.$message({
-        message: `成功提交节点，id为${this.$store.state.selectID}`,
-        type: 'success'
-      })
-      this.addNodeVisible = false
-      // runXXLayout("Tree", this.visgraph.getGraphData(), treeLayoutConfForm);
-    }
   },
   watch: {
     // graphData(newVal, oldVal) {
