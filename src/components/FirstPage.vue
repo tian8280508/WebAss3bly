@@ -100,7 +100,7 @@ import { visConf } from '@/assets/visConf.js'
 import { runXXLayout, treeLayoutConfForm, hubsizeLayoutConfForm } from '@/assets/visLayout'
 
 // import {ownDemoData1} from "@/assets/graphData1"
-import { ownDemoData2 } from "@/assets/graphData2"
+import { ownDemoData2 } from "@/assets/graphData3"
 
 
 import RichText from './RichText.vue'

@@ -11,7 +11,7 @@
         style="display: flex; justify-content: center; align-items: center"
         align-items="middle"
       >
-        <img style="margin-right: 4px" src="../assets/Shape.png" />
+        <img style="margin-right: 4px; width: 15px;height: 15px;" src="../assets/solana.jpg" />
         <label class="address-font">{{ shortenedAddress }}</label>
       </el-row>
       <el-row>
@@ -82,7 +82,7 @@ export default {
     },
     shortenedBalance () {
       if (this.balance) {
-        return `${this.balance}SOL`  // 假设余额是以 SOL 为单位的
+        return `${this.balance} SOL`  // 假设余额是以 SOL 为单位的
       }
       return ''
     }
