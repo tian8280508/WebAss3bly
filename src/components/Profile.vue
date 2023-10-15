@@ -48,7 +48,7 @@ import Vue from 'vue'
 import { ethers } from "ethers"
 import contractAbi from '@/contract/abi/WAG.json'
 import { contractAddress } from '@/components/const.js'
-import { Connection, LAMPORTS_PER_SOL } from '@solana/web3.js';
+import { Connection, LAMPORTS_PER_SOL } from '@solana/web3.js'
 
 
 export default {
@@ -81,8 +81,8 @@ export default {
       return ''
     },
     shortenedBalance () {
-      if (this.balance) {
-        return `${this.balance}SOL`  // 假设余额是以 SOL 为单位的
+      if (this.balance != null) {
+        return `${this.balance} SOL`  // 假设余额是以 SOL 为单位的
       }
       return ''
     }
@@ -132,8 +132,8 @@ export default {
         const resp = await window.solana.connect()
         this.account = resp.publicKey.toString()
         console.log('resp.publicKey.toString() :', this.account)
-        const balance = await this.connection.getBalance(window.solana.publicKey);
-        this.balance = balance / LAMPORTS_PER_SOL;  // 获取余额
+        const balance = await this.connection.getBalance(window.solana.publicKey)
+        this.balance = balance / LAMPORTS_PER_SOL  // 获取余额
         console.log(this.balance)
       } catch (err) {
         console.log('connectWallet err :', err)
