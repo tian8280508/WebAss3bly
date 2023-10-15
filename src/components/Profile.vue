@@ -11,7 +11,10 @@
         style="display: flex; justify-content: center; align-items: center"
         align-items="middle"
       >
-        <img style="margin-right: 4px" src="../assets/Shape.png" />
+        <img
+          style="margin-right: 4px; width: 15px; height: 15px"
+          src="../assets/solana.jpg"
+        />
         <label class="address-font">{{ shortenedAddress }}</label>
       </el-row>
       <el-row>
